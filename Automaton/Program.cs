@@ -33,7 +33,7 @@ namespace Automaton
             Console.WriteLine(a && b); // TRUE
 
             b3.Reset();
-            a2.Reset();
+            a2.Reset(); 
 
             input = "BAABBBBB";
 

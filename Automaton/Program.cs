@@ -40,7 +40,7 @@ namespace Automaton
             a = b3.Evaluate(input.ToCharArray());
             b = a2.Evaluate(input.ToCharArray());
 
-            Console.WriteLine(a && b); // FALSE (4 "b"s)
+            Console.WriteLine(a && b); // FALSE (6 "b"s)
 
 
 

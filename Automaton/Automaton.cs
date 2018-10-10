@@ -46,5 +46,11 @@ namespace Automaton
             // RETURN WHETHER AUTOMATON IS IN AN ACCEPTING STATE (IF TRUE then CurrentState ∈ F)
             return isAccepting;
         }
+        
+        public void Reset()
+        {
+            CurrentState = Q0;
+        }
+        
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +9,7 @@ namespace Automaton
     class Program
     {
         static void Main(string[] args)
-        { 
+        {
             // AUTOMATON WHICH FINDS 3 'B's IN STRING
             Automaton<char, int> b3 = new Automaton<char, int>(new char[] { 'A', 'B' }, new int[] { 0, 1, 2, 3, 4 }, 0, new int[] { 3 });
             b3.CreateStates((x, y) => x == 'B' ? (++y <= 3 ? y : 4) : y);
@@ -32,7 +32,10 @@ namespace Automaton
 
             Console.WriteLine(a && b); // TRUE
 
-            input = "BAABBB";
+            b3.Reset();
+            a2.Reset();
+
+            input = "BAABBBBB";
 
             a = b3.Evaluate(input.ToCharArray());
             b = a2.Evaluate(input.ToCharArray());

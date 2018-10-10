@@ -11,7 +11,7 @@ namespace Automaton
         static void Main(string[] args)
         {
             // AUTOMATON WHICH FINDS 3 'B's IN STRING
-            Automaton<char, int> b3 = new Automaton<char, int>(new char[] { 'A', 'B' }, new int[] { 0, 1, 2, 3, 4 }, 0, new int[] { 3, 4 });
+            Automaton<char, int> b3 = new Automaton<char, int>(new char[] { 'A', 'B' }, new int[] { 0, 1, 2, 3, 4 }, 0, new int[] { 3 });
             b3.CreateStates((x, y) => x == 'B' ? (++y <= 3 ? y : 4) : y);
             // AUTOMATON WHICH FINDS 2 'A's IN STRING
             Automaton<char, int> a2 = new Automaton<char, int>(new char[] { 'A', 'B' }, new int[] { 0, 1, 2, 3, 4 }, 0, new int[] { 2 });

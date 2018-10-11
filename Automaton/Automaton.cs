@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,14 +10,22 @@ namespace Automaton
     {
         private readonly StateMatrix<T, V> internalMatrix;
 
+        public bool CanCrash { get; private set; }
+
         public V[] F { get; private set; }
 
         public V Q0 { get; private set; }
         public V CurrentState { get; private set; }
 
-        public Automaton(T[] sigma, V[] q, V q0, V[] f)
+        public Automaton(T[] sigma, V[] q, V q0, V[] f, bool canCrash = true)
         {
-            internalMatrix = new StateMatrix<T, V>(sigma, q);
+            CanCrash = canCrash;
+
+            internalMatrix = new StateMatrix<T, V>(sigma, q)
+            {
+                UseTryCatch = CanCrash
+            };
+
             F = f;
 
             Q0 = q0;
@@ -36,6 +44,12 @@ namespace Automaton
             {
                 isAccepting = false;
                 CurrentState = internalMatrix[sequence[i], CurrentState];
+
+                // AUTOMATON CRASHED
+                if (CurrentState == null)
+                    return false;
+
+
                 for (int j = 0; j < F.Length; j++)
                 {
                     if (CurrentState.Equals(F[j]))
@@ -46,11 +60,10 @@ namespace Automaton
             // RETURN WHETHER AUTOMATON IS IN AN ACCEPTING STATE (IF TRUE then CurrentState ∈ F)
             return isAccepting;
         }
-        
+
         public void Reset()
         {
             CurrentState = Q0;
         }
-        
     }
 }

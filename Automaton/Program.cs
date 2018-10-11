@@ -42,9 +42,17 @@ namespace Automaton
 
             Console.WriteLine(a && b); // FALSE (6 "b"s)
 
+            
+            // DETECTS AB ABAB ABABAB
 
+            Automaton<char, string> ab = new Automaton<char, string>(new char[] { 'A', 'B' }, new string[] { "", "A", "AB" }, "", new string[] { "AB" });
+            ab.CreateStates((x, y) => (y + x).Length > 2 ? x + "" : y + x);
+
+            input = "ABABABABABABAB";
+            Console.WriteLine(ab.Evaluate(input.ToCharArray())); // TRUE
 
             Console.Read();
+
         }
 
 

@@ -51,6 +51,15 @@ namespace Automaton
             input = "ABABABABABABAB";
             Console.WriteLine(ab.Evaluate(input.ToCharArray())); // TRUE
 
+             // IS THE FIFTH LETTER AN A
+            input = "BBBBAAAABBBBBBBBBB";
+
+            Automaton<char, int> isFifthA = new Automaton<char, int>(new char[] { 'A', 'B' }, new int[] { 0, 1, 2, 3, 4, 5, 6 }, 0, new int[] { 5 });
+            isFifthA.CreateStates((x, y) => (x == 'A' || x == 'B') && y + 1 < 5 ? ++y : (x == 'A' && y == 4) ? ++y : (y == 5) ? 5 : 6) ;
+
+            Console.WriteLine(isFifthA.Evaluate(input.ToCharArray())); // TRUE
+            
+            
             Console.Read();
 
         }

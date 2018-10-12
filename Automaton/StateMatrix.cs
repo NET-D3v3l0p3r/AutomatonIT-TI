@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +8,8 @@ namespace Automaton
 {
     public class StateMatrix<T, V>
     {
+        public bool UseTryCatch { get; set; }
+
         public V[] Q { get; private set; }
         public T[] Sigma { get; private set; }
    
@@ -15,7 +17,18 @@ namespace Automaton
 
         public V this[T a, V b]
         {
-            get { return tupleMap[new Tuple<V, T>(b, a)]; }
+            get
+            {
+                switch(UseTryCatch)
+                {
+                    case true:
+                        try { return tupleMap[new Tuple<V, T>(b, a)]; } catch { return default(V); }
+                    default:
+                        return tupleMap[new Tuple<V, T>(b, a)];
+                }
+                
+
+            }
         }
 
 

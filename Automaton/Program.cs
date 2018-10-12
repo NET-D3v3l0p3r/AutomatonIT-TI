@@ -60,6 +60,61 @@ namespace Automaton
             Console.WriteLine(isFifthA.Evaluate(input.ToCharArray())); // TRUE
             
             
+            // KELLER-AUTOMAT
+            
+            char eps = '\0';
+            char[] sigma = new char[] { '(', ')', eps };
+            string[] q = new string[] { "yes", "no", "dead" };
+            string[] k = new string[] { "q0", "("};
+
+        
+
+            KAutomaton<char, string, string> automaton = new KAutomaton<char, string, string>(sigma, q, k, "yes", "q0", new string[] { "yes" });
+            automaton.CreateStates((_in, _q, _k) =>
+            {
+                switch (_q)
+                {
+                    case "yes":
+                        // ADD TO STACK
+                        if (_in.Equals('(') && _k.Equals("q0"))
+                            return new Tuple<string, string[]>("no", new string[] { "q0", "(" });
+                        // DEAD
+                        if (_in.Equals(')') && _k.Equals("q0"))
+                            return new Tuple<string, string[]>("dead", new string[] { "q0" });
+                        break;
+                    case "no":
+
+                        // ADD TO STACK
+                        if (_in.Equals('(') && _k.Equals("("))
+                            return new Tuple<string, string[]>("no", new string[] { "(", "(" });
+                        if (_in.Equals('(') && _k.Equals("q0"))
+                            return new Tuple<string, string[]>("no", new string[] { "q0", "(" });
+
+                        // CORRECT
+                        if (_in.Equals(')') && _k.Equals("q0"))
+                            return new Tuple<string, string[]>("yes", new string[] { "q0" });
+                        if (_in.Equals(eps) && _k.Equals("q0"))
+                            return new Tuple<string, string[]>("yes", new string[] { "q0" });
+
+
+                        // DELETE FROM STACK
+                        if (_in.Equals(')') && _k.Equals("("))
+                            return new Tuple<string, string[]>("no", new string[0]);
+
+                        break;
+ 
+                }
+
+
+                // DEAD
+                return new Tuple<string, string[]>("dead", new string[] { "q0" });
+            });
+
+            Console.WriteLine(automaton.Evaluate("(())".ToCharArray(), eps)); // TRUE
+            Console.WriteLine(automaton.Evaluate("((())".ToCharArray(), eps)); // false
+
+ 
+            
             Console.Read();
 
         }
